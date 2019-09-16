@@ -120,7 +120,7 @@
                   value="sqlSessionFactory"/>
     </bean>
 
-    <!-- 注解方式配置事务：在使用事务处理的方法上添加注解 @Transactional 即可 -->
-    <tx:annotation-driven
-            transaction-manager="transactionManager"/>
+<!--    &lt;!&ndash; 注解方式配置事务：在使用事务处理的方法上添加注解 @Transactional 即可 &ndash;&gt;-->
+<!--    <tx:annotation-driven-->
+<!--            transaction-manager="transactionManager"/>-->
 </beans>
