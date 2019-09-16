@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuw.dao.UserInfoBeanMapper">
+  <resultMap id="BaseResultMap" type="com.yuw.bean.UserInfoBean">
+    <id column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="userPsw" jdbcType="VARCHAR" property="userpsw" />
+    <result column="userAge" jdbcType="VARCHAR" property="userage" />
+    <result column="userAddress" jdbcType="VARCHAR" property="useraddress" />
+    <result column="userRegDate" jdbcType="TIMESTAMP" property="userregdate" />
+    <result column="isDeleted" jdbcType="BIT" property="isdeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, userName, userPsw, userAge, userAddress, userRegDate, isDeleted
+  </sql>
+
+<!--登录查询业务逻辑处理-->
+  <select id="doLogin" parameterType="com.yuw.bean.UserInfoBean" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from userinfo
+    where username = #{username,jdbcType=VARCHAR} and userpsw =  #{userpsw,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from userinfo
+    where userId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yuw.bean.UserInfoBean">
+    insert into userinfo (userId, userName, userPsw, 
+      userAge, userAddress, userRegDate, 
+      isDeleted)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpsw,jdbcType=VARCHAR}, 
+      #{userage,jdbcType=VARCHAR}, #{useraddress,jdbcType=VARCHAR}, #{userregdate,jdbcType=TIMESTAMP}, 
+      #{isdeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuw.bean.UserInfoBean">
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="userpsw != null">
+        userPsw,
+      </if>
+      <if test="userage != null">
+        userAge,
+      </if>
+      <if test="useraddress != null">
+        userAddress,
+      </if>
+      <if test="userregdate != null">
+        userRegDate,
+      </if>
+      <if test="isdeleted != null">
+        isDeleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpsw != null">
+        #{userpsw,jdbcType=VARCHAR},
+      </if>
+      <if test="userage != null">
+        #{userage,jdbcType=VARCHAR},
+      </if>
+      <if test="useraddress != null">
+        #{useraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userregdate != null">
+        #{userregdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdeleted != null">
+        #{isdeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuw.bean.UserInfoBean">
+    update userinfo
+    <set>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpsw != null">
+        userPsw = #{userpsw,jdbcType=VARCHAR},
+      </if>
+      <if test="userage != null">
+        userAge = #{userage,jdbcType=VARCHAR},
+      </if>
+      <if test="useraddress != null">
+        userAddress = #{useraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userregdate != null">
+        userRegDate = #{userregdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdeleted != null">
+        isDeleted = #{isdeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuw.bean.UserInfoBean">
+    update userinfo
+    set userName = #{username,jdbcType=VARCHAR},
+      userPsw = #{userpsw,jdbcType=VARCHAR},
+      userAge = #{userage,jdbcType=VARCHAR},
+      userAddress = #{useraddress,jdbcType=VARCHAR},
+      userRegDate = #{userregdate,jdbcType=TIMESTAMP},
+      isDeleted = #{isdeleted,jdbcType=BIT}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>
